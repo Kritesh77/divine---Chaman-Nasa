@@ -415,90 +415,55 @@
         </div>
       </header>
       <!-- header end -->
+
+      <!-- breadcrumb start -->
+      <div class="breadcrumb">
+        <div class="container">
+          <ul class="list-unstyled d-flex align-items-center m-0">
+            <li><a href="/">Home</a></li>
+            <li>
+              <svg
+                class="icon icon-breadcrumb"
+                width="64"
+                height="64"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g opacity="0.4">
+                  <path
+                    d="M25.9375 8.5625L23.0625 11.4375L43.625 32L23.0625 52.5625L25.9375 55.4375L47.9375 33.4375L49.3125 32L47.9375 30.5625L25.9375 8.5625Z"
+                    fill="#000"
+                  />
+                </g>
+              </svg>
+            </li>
+            <li>Products</li>
+          </ul>
+        </div>
+      </div>
+      <!-- breadcrumb end -->
+
       <main id="MainContent" class="content-for-layout">
-        <div class="product-page mt-100">
+        <div class="collection mt-100">
           <div class="container">
             <div class="row">
-              <div class="col-lg-6 col-md-12 col-12">
-                <div class="product-gallery product-gallery-vertical d-flex">
-                  <div class="product-img-large">
-                    <div
-                      class="img-large-slider common-slider"
-                      data-slick='{
-                                        "slidesToShow": 1, 
-                                        "slidesToScroll": 1,
-                                        "dots": false,
-                                        "arrows": false,
-                                        "asNavFor": ".img-thumb-slider"
-                                    }'
-                    >
-                      <div class="img-large-wrapper">
-                        <a
-                          href="assets/img/products/bags/39.jpg"
-                          data-fancybox="gallery"
-                        >
-                          <img
-                            src="assets/img/products/bags/39.jpg"
-                            alt="img"
-                          />
-                        </a>
-                      </div>
-                    </div>
+              <!-- product area start -->
+              <div class="col-lg-12 col-md-12 col-12">
+                <div
+                  class="filter-sort-wrapper d-flex justify-content-between flex-wrap"
+                >
+                  <div class="collection-title-wrap d-flex align-items-end">
+                    <h2 class="collection-title heading_24 mb-0">
+                      All products
+                    </h2>
                   </div>
-                  <div class="product-img-thumb">
-                    <div
-                      class="img-thumb-slider common-slider"
-                      data-vertical-slider="true"
-                      data-slick='{
-                                        "slidesToShow": 5, 
-                                        "slidesToScroll": 1,
-                                        "dots": false,
-                                        "arrows": true,
-                                        "infinite": false,
-                                        "speed": 300,
-                                        "cssEase": "ease",
-                                        "focusOnSelect": true,
-                                        "swipeToSlide": true,
-                                        "asNavFor": ".img-large-slider"
-                                    }'
-                    >
-                      <div>
-                        <div class="img-thumb-wrapper">
-                          <img
-                            src="assets/img/products/bags/39.jpg"
-                            alt="img"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="activate-arrows show-arrows-always arrows-white d-none d-lg-flex justify-content-between mt-3"
-                    ></div>
-                  </div>
+                </div>
+                <div class="">
+                  <div class="row" id="collection-product-container"></div>
                 </div>
               </div>
-              <div class="col-lg-6 col-md-12 col-12">
-                <div class="product-details ps-lg-4">
-                  <h2 class="product-title mb-3">Accesories Lather bag</h2>
-                </div>
-                <div id="pdescription" class="tab-pane fade show active">
-                  <div class="row">
-                    <div class="col-lg-12 col-md-12 col-12">
-                      <div class="desc-content mt-4">
-                        <p class="text_16 ps-lg-4">
-                          Lorem ipsum dolor sit amet conse ctetur adipisicing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!-- product area end -->
             </div>
           </div>
         </div>
@@ -1400,43 +1365,35 @@
           </div>
         </div>
       </div>
-
       <!-- all js -->
       <script src="assets/js/vendor.js"></script>
+      <script src="assets/js/main.js"></script>
       <script src="assets/js/data.js"></script>
       <script>
         let params = new URLSearchParams(window.location.search);
         let itemId = params.get("id");
-        let items = data.filter((item) => item.id === itemId);
-        $(".product-title").html(items[0].title);
-        let thumbMap = [],
-          largeImageMap = [];
-        let productMap = items?.[0]?.images?.forEach((img) => {
-          const thumb = `
-            <div>
-                <div class="img-thumb-wrapper">
-                    <img
-                    src="${img}"
-                    alt="img"
-                    />
+        let items = data.filter((item) => item.category === itemId);
+        let productMap = items?.map((product) => {
+          const template = `
+          <div class="col-lg-3 col-md-6 col-6" data-aos="fade-up" data-aos-duration="700">
+            <div class="product-card">
+                <div class="product-card-img">
+                    <a class="hover-switch" href="product.html?id=${product.id}">
+                        <img class="primary-img" src="${product.images?.[0]}" alt="product-img" />
+                    </a>
+                </div>
+                <div class="product-card-details">
+                    <h3 class="product-card-title text-center">
+                        <a  href="product.html?id=${product.id}">${product.title}</a>
+                    </h3>
                 </div>
             </div>
+        </div>
         `;
-          const large = `
-            <div class="img-large-wrapper">
-                <img
-                src="${img}"
-                alt="img"
-                />
-            </div>
-        `;
-          thumbMap.push(thumb);
-          largeImageMap.push(large);
+          return template;
         });
-        $(".img-thumb-slider").html(thumbMap);
-        $(".img-large-slider").html(largeImageMap);
+        $("#collection-product-container").html(productMap);
       </script>
-      <script src="assets/js/main.js"></script>
     </div>
   </body>
 </html>
